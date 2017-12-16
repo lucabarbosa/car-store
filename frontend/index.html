@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Car Store</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <main class="main">
+    <header class="company-info">
+      <h1>
+        <span data-js="company-name"></span> -
+        <span data-js="company-contact"></span>
+      </h1>
+    </header>
+
+    <section class="content">
+      <div class="form-section">
+        <form action="/" data-js="form-register">
+          <ul>
+            <li class="form-item">
+              <label>Imagem do Carro</label>
+              <input type="url" data-js="input-image">
+            </li>
+            <li class="form-item">
+              <label>Marca / Modelo</label>
+              <input type="text" data-js="input-model">
+            </li>
+            <li class="form-item">
+              <label>Ano</label>
+              <input type="text" data-js="input-year">
+            </li>
+            <li class="form-item">
+              <label>Placa</label>
+              <input type="text" data-js="input-plate">
+            </li>
+            <li class="form-item">
+              <label>Cor</label>
+              <input type="text" data-js="input-color">
+            </li>
+            <li>
+              <button class="form-button" type="submit" data-js="input-submit">Cadastrar</button>
+            </li>
+          </ul>
+        </form>
+      </div>
+
+      <table class="table-cars" >
+        <thead>
+          <th>Imagem do Carro</th>
+          <th>Marca / Modelo</th>
+          <th>Ano</th>
+          <th>Placa</th>
+          <th>Cor</th>
+        </thead>
+        <tbody data-js="table-cars">
+        </tbody>
+      </table>
+    </section>
+  </main>
+  <script src="js/dom.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
