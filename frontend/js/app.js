@@ -94,10 +94,8 @@
         }
 
         const data = JSON.parse(this.responseText);
-        const $companyName = $('[data-js="company-name"]');
-        const $companyContact = $('[data-js="company-contact"]');
-        $companyName.get().textContent = data['name'];
-        $companyContact.get().textContent = data['phone'];
+        $('[data-js="company-name"]').get().textContent = data['name'];
+        $('[data-js="company-contact"]').get().textContent = data['phone'];
       },
 
       isReady: function isReady() {
