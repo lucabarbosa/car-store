@@ -54,7 +54,7 @@
 
       handleSubmit: function handleSubmit(event) {
         event.preventDefault();
-        app.creatCar();
+        app.createCar();
       },
 
       ajax: {
@@ -78,7 +78,7 @@
         return request.readyState === 4 && request.status === 200;
       },
 
-      creatCar: function creatCar() {
+      createCar: function createCar() {
         const car = {
           image: $('[data-js="input-image"]').get().value,
           brandModel: $('[data-js="input-model"]').get().value,
