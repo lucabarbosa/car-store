@@ -63,7 +63,7 @@
         const $tdYear = document.createElement('td');
         const $tdPlate = document.createElement('td');
         const $tdColor = document.createElement('td');
-
+        const $tdRemoveCar = document.createElement('td');
 
         $image.setAttribute('src', $('[data-js="input-image"]').get().value);
         $tdImage.appendChild($image);
@@ -71,14 +71,25 @@
         $tdYear.textContent = $('[data-js="input-year"]').get().value;
         $tdPlate.textContent = $('[data-js="input-plate"]').get().value;
         $tdColor.textContent = $('[data-js="input-color"]').get().value;
+        $tdRemoveCar.innerHTML = '<button><i class="fa fa-trash" aria-hidden="true"></i></button>';
+        $tdRemoveCar.addEventListener('click', this.removeCar, false);
 
         $tr.appendChild($tdImage);
         $tr.appendChild($tdModel);
         $tr.appendChild($tdYear);
         $tr.appendChild($tdPlate);
         $tr.appendChild($tdColor);
+        $tr.appendChild($tdRemoveCar);
 
         return $fragment.appendChild($tr);
+      },
+
+      removeCar: function removeCar() {
+        $('[data-js="table-cars"]').get().deleteRow(app.getRowIndex.call(this));
+      },
+
+      getRowIndex: function getRowIndex() {
+        return this.parentNode.rowIndex - 1;
       },
 
       companyInfo: function companyInfo() {
