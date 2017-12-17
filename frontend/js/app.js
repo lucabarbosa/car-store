@@ -38,6 +38,8 @@
 
 
   const app = (function() {
+    const $tableCar = $('[data-js="table-cars"]').get();
+
     return {
       init: function init() {
         this.loadcompanyInfo();
@@ -54,7 +56,7 @@
 
       handleSubmit: function handleSubmit(event) {
         event.preventDefault();
-        app.creatCar();
+        app.createCar();
       },
 
       ajax: {
@@ -71,6 +73,14 @@
           ajax.open('GET', url, true);
           ajax.send();
           ajax.addEventListener('readystatechange', callback, false);
+        },
+
+        delete: function (url, callback, data) {
+          const ajax = new XMLHttpRequest();
+          ajax.open('DELETE', url, true);
+          ajax.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          ajax.send(data);
+          ajax.addEventListener('readystatechange', callback, false);
         }
       },
 
@@ -78,7 +88,7 @@
         return request.readyState === 4 && request.status === 200;
       },
 
-      creatCar: function creatCar() {
+      createCar: function createCar() {
         const car = {
           image: $('[data-js="input-image"]').get().value,
           brandModel: $('[data-js="input-model"]').get().value,
@@ -128,12 +138,12 @@
       },
 
       fillCarTable: function fillCarTable(car) {
-        const $tableCar = $('[data-js="table-cars"]').get();
         $tableCar.appendChild(app.createTableRow(car));
       },
 
       createTableRow: function createTableRow(car) {
         const $fragment = document.createDocumentFragment();
+
         const $tr = document.createElement('tr');
         const $tdImage = document.createElement('td');
         const $image = document.createElement('img');
@@ -149,7 +159,7 @@
         $tdYear.textContent = car.year;
         $tdPlate.textContent = car.plate;
         $tdColor.textContent = car.color;
-        $tdRemoveCar.innerHTML = '<button><i class="fa fa-trash" aria-hidden="true"></i></button>';
+        $tdRemoveCar.innerHTML = '<button data-js="button-remove"><i class="fa fa-trash" aria-hidden="true"></i></button>';
         $tdRemoveCar.addEventListener('click', app.removeCar, false);
 
         $tr.appendChild($tdImage);
@@ -180,7 +190,27 @@
       },
 
       removeCar: function removeCar() {
-        $('[data-js="table-cars"]').get().deleteRow(app.getRowIndex.call(this));
+        const carRowIndex = app.getRowIndex.call(this);
+        const plate = $tableCar.rows[carRowIndex].cells[3].textContent;
+
+        app.ajax.delete(
+          'http://localhost:3000/car',
+          app.handleRemoveCar(carRowIndex),
+          `plate=${ plate }`
+        );
+
+      },
+
+      handleRemoveCar: function handleRemoveCar(carRowIndex) {
+        return function handleRemoveCar() {
+          if(!app.isRequestReady(this)) {
+            return;
+          }
+
+          if(JSON.parse(this.responseText)['message'] === 'success') {
+            $tableCar.deleteRow(carRowIndex);
+          }
+        }
       },
 
       getRowIndex: function getRowIndex() {
